@@ -1,5 +1,5 @@
 'use strict';
-
+// postcss 是给css加前缀进行浏览器兼容
 var postcss = require('postcss');
 var fs = require('fs');
 var path = require('path');

@@ -1,8 +1,11 @@
+// 获取 组件对应的文件位置
 var Components = require('../../components.json');
 var fs = require('fs');
+// string这个库是用来进行模板变量的替换
 var render = require('json-templater/string');
 var uppercamelcase = require('uppercamelcase');
 var path = require('path');
+// 是一个常量，返回当前操作系统的换行符（Windows系统是\r\n，其他系统是\n）。
 var endOfLine = require('os').EOL;
 
 var OUTPUT_PATH = path.join(__dirname, '../../src/index.js');
@@ -70,13 +73,14 @@ var installTemplate = [];
 var listTemplate = [];
 
 ComponentNames.forEach(name => {
+  // 大写name
   var componentName = uppercamelcase(name);
-
+  // 模板替换
   includeComponentTemplate.push(render(IMPORT_TEMPLATE, {
     name: componentName,
     package: name
   }));
-
+  // 不包含这些组件的话 需要导入这些模板
   if (['Loading', 'MessageBox', 'Notification', 'Message', 'InfiniteScroll'].indexOf(componentName) === -1) {
     installTemplate.push(render(INSTALL_COMPONENT_TEMPLATE, {
       name: componentName,

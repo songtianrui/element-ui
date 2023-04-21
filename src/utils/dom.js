@@ -79,17 +79,18 @@ export function addClass(el, cls) {
   if (!el) return;
   var curClass = el.className;
   var classes = (cls || '').split(' ');
-
+  // 循环添加类名
   for (var i = 0, j = classes.length; i < j; i++) {
     var clsName = classes[i];
     if (!clsName) continue;
-
+    // classList 只读属性  有的浏览器没有这个属性
     if (el.classList) {
       el.classList.add(clsName);
     } else if (!hasClass(el, clsName)) {
       curClass += ' ' + clsName;
     }
   }
+  // 如果没有classList属性 需要要再setAttribute
   if (!el.classList) {
     el.setAttribute('class', curClass);
   }

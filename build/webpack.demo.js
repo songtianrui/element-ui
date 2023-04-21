@@ -31,7 +31,7 @@ const webpackConfig = {
     modules: ['node_modules']
   },
   devServer: {
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 8085,
     publicPath: '/',
     hot: true,
@@ -53,12 +53,12 @@ const webpackConfig = {
   },
   module: {
     rules: [
-      {
-        enforce: 'pre',
-        test: /\.(vue|jsx?)$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader'
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.(vue|jsx?)$/,
+      //   exclude: /node_modules/,
+      //   loader: 'eslint-loader'
+      // },
       {
         test: /\.(jsx?|babel|es6)$/,
         include: process.cwd(),

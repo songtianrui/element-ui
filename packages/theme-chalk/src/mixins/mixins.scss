@@ -80,6 +80,10 @@
   $selector: &;
   $currentSelector: "";
   @each $unit in $element {
+    /*
+      $B: $namespace+'-'+$block !global; el-tree-node
+      $element-separator: __
+    */
     $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
   }
 

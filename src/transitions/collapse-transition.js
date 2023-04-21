@@ -67,6 +67,9 @@ class Transition {
 export default {
   name: 'ElCollapseTransition',
   functional: true,
+  // 函数组件除了接收一个h函数外，渲染函数还会接收一个额外的 context 参数，
+  // 为没有实例的函数组件提供上下文信息。 children 是从上下文中解构出来的,
+  // 也就是这个函数组件标签包裹的元素
   render(h, { children }) {
     const data = {
       on: new Transition()

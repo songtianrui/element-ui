@@ -321,7 +321,6 @@
 
     created() {
       this.isTree = true;
-
       this.store = new TreeStore({
         key: this.nodeKey,
         data: this.data,
@@ -337,9 +336,10 @@
         defaultExpandAll: this.defaultExpandAll,
         filterNodeMethod: this.filterNodeMethod
       });
+      console.log('this.store', this.store);
 
       this.root = this.store.root;
-
+      debugger
       let dragState = this.dragState;
       this.$on('tree-node-drag-start', (event, treeNode) => {
         if (typeof this.allowDrag === 'function' && !this.allowDrag(treeNode.node)) {

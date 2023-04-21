@@ -29,7 +29,8 @@
           stroke="#e5e9f2"
           :stroke-width="relativeStrokeWidth"
           fill="none"
-          :style="trailPathStyle"></path>
+          :style="trailPathStyle"
+          ></path>
         <path
           class="el-progress-circle__path"
           :d="trackPath"
@@ -37,7 +38,8 @@
           fill="none"
           :stroke-linecap="strokeLinecap"
           :stroke-width="percentage ? relativeStrokeWidth : 0"
-          :style="circlePathStyle"></path>
+          :style="circlePathStyle"
+          ></path>
       </svg>
     </div>
     <div
@@ -103,6 +105,7 @@
         return style;
       },
       relativeStrokeWidth() {
+        console.log('(this.strokeWidth / this.width * 100).toFixed(1)', (this.strokeWidth / this.width * 100).toFixed(1));
         return (this.strokeWidth / this.width * 100).toFixed(1);
       },
       radius() {
@@ -112,6 +115,7 @@
           return 0;
         }
       },
+      // 路径
       trackPath() {
         const radius = this.radius;
         const isDashboard = this.type === 'dashboard';
@@ -122,22 +126,33 @@
           a ${radius} ${radius} 0 1 1 0 ${isDashboard ? '' : '-'}${radius * 2}
           `;
       },
+      // 周长
       perimeter() {
         return 2 * Math.PI * this.radius;
       },
+      // 仪表盘需要空余
       rate() {
         return this.type === 'dashboard' ? 0.75 : 1;
       },
+      // stroke-dashoffset 属性指定了 dash 模式到路径开始的距离 
+      // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dashoffset
+      // 负数 push 向后推     正数  pull 往回移动
       strokeDashoffset() {
         const offset = -1 * this.perimeter * (1 - this.rate) / 2;
-        return `${offset}px`;
+        return offset;
       },
+      // 轨道样式
       trailPathStyle() {
+        console.log({
+          strokeDasharray: `${(this.perimeter * this.rate)}px, ${this.perimeter * (1 - this.rate)}px`,
+          strokeDashoffset: this.strokeDashoffset
+        });
         return {
-          strokeDasharray: `${(this.perimeter * this.rate)}px, ${this.perimeter}px`,
+          strokeDasharray: `${(this.perimeter * this.rate)}px, ${this.perimeter * (1 - this.rate)}px`,
           strokeDashoffset: this.strokeDashoffset
         };
       },
+      // 圆圈进度以及 仪表盘进度
       circlePathStyle() {
         return {
           strokeDasharray: `${this.perimeter * this.rate * (this.percentage / 100) }px, ${this.perimeter}px`,
@@ -145,6 +160,7 @@
           transition: 'stroke-dasharray 0.6s ease 0s, stroke 0.6s ease'
         };
       },
+      // 进度条颜色 圆圈以及进度条
       stroke() {
         let ret;
         if (this.color) {
