@@ -134,6 +134,7 @@
       onButtonDown(event) {
         if (this.disabled) return;
         event.preventDefault();
+        // 设置是否是dragging状态
         this.onDragStart(event);
         window.addEventListener('mousemove', this.onDragging);
         window.addEventListener('touchmove', this.onDragging);
@@ -153,6 +154,12 @@
         this.setPosition(this.newPosition);
         this.$parent.emitChange();
       },
+      /**
+       * 设置起始点的位置
+       * 设置一些参数状态
+       * @param {*} event 
+       * 
+       */
       onDragStart(event) {
         this.dragging = true;
         this.isClick = true;
@@ -173,6 +180,7 @@
         if (this.dragging) {
           this.isClick = false;
           this.displayTooltip();
+          // 设置slider的宽或者高
           this.$parent.resetSize();
           let diff = 0;
           if (event.type === 'touchmove') {
