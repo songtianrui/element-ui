@@ -264,22 +264,30 @@
           return;
         }
         let button;
+        // 判断targetValue离minValue近还是maxValue 近
+        // 如果离minValue近
         if (Math.abs(this.minValue - targetValue) < Math.abs(this.maxValue - targetValue)) {
           button = this.firstValue < this.secondValue ? 'button1' : 'button2';
         } else {
+          // 离maxValue近
           button = this.firstValue > this.secondValue ? 'button1' : 'button2';
         }
         this.$refs[button].setPosition(percent);
       },
 
       onSliderClick(event) {
+        // getBoundingClientRect  返回元素的 大小(标准盒模型下 contentWidth + paddingLeft + paddingRight + borderLeftWidth + borderRightWidth) 距离视口top和left的距离
         if (this.sliderDisabled || this.dragging) return;
         this.resetSize();
         if (this.vertical) {
           const sliderOffsetBottom = this.$refs.slider.getBoundingClientRect().bottom;
+          // bottom - 点击位置y轴 = sliderbar长度
+          // 计算百分比
           this.setPosition((sliderOffsetBottom - event.clientY) / this.sliderSize * 100);
         } else {
           const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
+          // 点击的X坐标 - x轴偏移量 = sliderbar长度
+          // 计算百分比
           this.setPosition((event.clientX - sliderOffsetLeft) / this.sliderSize * 100);
         }
         this.emitChange();
@@ -287,6 +295,8 @@
 
       resetSize() {
         if (this.$refs.slider) {
+          // clientWidth contentWidth + paddingLeft + paddingRight
+          // clientHeight contentHeight + paddingTop + paddingBottom
           this.sliderSize = this.$refs.slider[`client${ this.vertical ? 'Height' : 'Width' }`];
         }
       },

@@ -88,7 +88,7 @@
       precision() {
         return this.$parent.precision;
       },
-
+      // 当前占得百分比
       currentPosition() {
         return `${ (this.value - this.min) / (this.max - this.min) * 100 }%`;
       },
@@ -167,6 +167,7 @@
           event.clientY = event.touches[0].clientY;
           event.clientX = event.touches[0].clientX;
         }
+        // 设置move的起点
         if (this.vertical) {
           this.startY = event.clientY;
         } else {
@@ -183,6 +184,8 @@
           // 设置slider的宽或者高
           this.$parent.resetSize();
           let diff = 0;
+          // touch 事件 
+          // touchStart touchMove touchEnd
           if (event.type === 'touchmove') {
             event.clientY = event.touches[0].clientY;
             event.clientX = event.touches[0].clientX;
@@ -194,6 +197,7 @@
             this.currentX = event.clientX;
             diff = (this.currentX - this.startX) / this.$parent.sliderSize * 100;
           }
+          // 新的百分比
           this.newPosition = this.startPosition + diff;
           this.setPosition(this.newPosition);
         }
