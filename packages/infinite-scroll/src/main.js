@@ -98,6 +98,7 @@ const handleScroll = function(cb) {
   let shouldTrigger = false;
 
   if (container === el) {
+    //offsetHeight 包括 border
     // be aware of difference between clientHeight & offsetHeight & window.getComputedStyle().height
     const scrollBottom = container.scrollTop + getClientHeight(container);
     shouldTrigger = container.scrollHeight - scrollBottom <= distance;
